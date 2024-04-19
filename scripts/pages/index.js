@@ -152,19 +152,40 @@ async function filterFunction() {
         for (let button_filter of object_elements_dom.all_button_filter_selected) {
             const array_one_selected = filterSelect(button_filter, all_recipes);
             for (let element of array_all_selected) {
-                if (!array_one_selected.includes(element)) {
+                let existingElement = false;
+                for (let one_element_one_selected of array_one_selected) {
+                    if (one_element_one_selected === existingElement) {
+                        existingElement = true
+                        break
+                    }
+                }
+                if (!existingElement) {
                     const index_element = array_all_selected.indexOf(element);
                     array_all_selected.splice(index_element, 1);
                 }
+                /*if (!array_one_selected.includes(element)) {
+                    const index_element = array_all_selected.indexOf(element);
+                    array_all_selected.splice(index_element, 1);
+                }*/
             }
         }
 
         if (object_elements_dom.input_search_main.value.length >= 3) {
             const array_search = filterSearch(all_recipes);
             for (let element of array_search) {
-                if (array_all_selected.includes(element)) {
+                let elementExisting = false
+                for (let one_selected of array_all_selected) {
+                    if (one_selected === element) {
+                        elementExisting = true;
+                        break
+                    }
+                }
+                if (elementExisting) {
                     array_to_show.push(element);
                 }
+                /*if (array_all_selected.includes(element)) {
+                    array_to_show.push(element);
+                }*/
             }
             createArrayToShow(array_to_show);
         } else {
