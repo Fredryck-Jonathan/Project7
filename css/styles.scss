@@ -1,0 +1,499 @@
+body{
+
+    font-family: "Manrope", sans-serif;
+    margin: 0;
+    padding: 0;
+
+}
+
+#section-search{
+
+
+    background-image: url("../assets/images/section_de_fond.jpg");
+    background-position-y: 60%;
+    background-size: cover;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 667px;
+
+    &::before{
+
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 667px;
+            background-color: rgba(0, 0, 0, 0.5); /* Couleur noire semi-transparente */
+
+    }
+
+    #logo-icone{
+        position: absolute;
+        top: 51px;
+        left: 69px;
+        width: 200px;
+    }
+
+
+    #zone-search{
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 70%;
+        z-index: 100;
+
+        p{
+
+            color: #FFD15B;
+            text-transform:uppercase;
+            font-size: 44px;
+            font-family: 'Anton',sans-serif;
+            text-align: center;
+            width: 65%;
+        }
+
+        #input-zone-search{
+
+            display: flex;
+
+            position: relative;
+            width: 100%;
+
+
+            input{
+
+                width: 100%;
+                padding: 25px 70px 25px 25px;
+                border: none;
+                border-radius: 11px;
+                font-size: 16px;
+                font-family: "Manrope", sans-serif;
+
+            }
+
+            button{
+
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                background-color: #1B1B1B;
+                border-radius: 10px;
+                border: none;
+                padding: 10px;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+
+                &:hover{
+
+                    background-color: #FFD15B;
+
+                    svg circle, svg line{
+
+                        stroke:#1B1B1B;
+    
+                    }
+
+                }
+
+
+
+            }
+
+        }
+
+    }
+
+
+}
+
+#section-dropdown-filter{
+
+    display: flex;
+    flex-direction: column;
+    background-color: #EDEDED;
+    padding: 50px;
+
+
+    #div-all-dropdown-number-recette{
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        #div-all-dropdown{
+
+
+            display: flex;
+            flex-direction: row;
+            gap: 50px;
+
+            .dropdown{
+
+                z-index: 100;
+
+                position: relative;
+
+
+                display: flex;
+                flex-direction: column;
+                width: 200px;
+                transition: all 0.3s ease-in-out;
+
+                &.active{
+
+
+                    .dropdown-first-part{
+
+                        border-radius: 11px 11px 0px 0px;
+                        transition: all 0.3s ease ;
+
+                    }
+
+                    .dropdown-second-part{
+
+                        transform: scaleY(100%);
+                        transition: all 0.3s ease 0.2s;
+
+
+
+                    }
+
+
+                }
+
+                .dropdown-first-part{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 0px 10px 0px 10px;
+                    background-color: white;
+                    border-radius: 11px;
+                    border: none;
+                    cursor: pointer;
+                    transition: all 0.3s ease 0.2s;
+                    min-height: 50px;
+                    z-index: 1;
+                    &:hover{
+                        background-color: rgb(212, 212, 212);
+                    }
+
+                    p{
+
+                        font-family: "Manrope", sans-serif;
+
+                    }
+                }
+
+                .dropdown-second-part{
+
+
+                    
+                    position: absolute;
+
+                    top: 50px;
+                    
+                    display: flex;
+                    flex-direction: column;
+                    z-index: 0;
+                    background-color: white;
+                    padding: 10px 0px 10px 0px;
+                    border-radius: 0px 0px 11px 11px;
+
+                    transform: scaleY(0%);
+                    transform-origin: top;
+                    transition: all 0.3s ease;
+
+                    .dropdown-search-div{
+
+                        width: 80%;
+                        display: flex;
+                        align-items: center;
+                        position: relative;
+                        margin: auto;
+
+                        padding: 0px 0px 10px 0px;
+
+                        input{
+
+                            width: 100%;
+                            padding: 7px;
+                            padding-right: 20px;
+                            border: 2px solid lightGrey;
+                            color: #7A7A7A;
+
+
+                        }
+
+                        svg{
+                            position: absolute;
+                            right: 7px;
+                        }
+
+                    }
+
+                    .elements-select{
+
+                        margin: 0px 0px 15px 0px;
+
+                        .one-element-dropdown-selected{
+
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+
+
+                            border: none;
+                            font-family: "Manrope", sans-serif;
+                            font-weight: bold;
+                            text-align: start;
+
+                            background-color: white;
+                            padding: 10px 5px 10px 20px;
+                            width: 100%;
+                            cursor: pointer;
+
+
+                            &:hover{
+
+                                background-color: #FFD15B;
+
+                            }
+
+                            img{
+
+                                margin-right: 15px;
+
+                            }
+
+                        }
+
+                    }
+
+                    .elements-no-select{
+
+                        max-height: 150px;
+                        overflow-y: scroll;
+
+                        .one-element-dropdown{
+
+                            border: none;
+                            font-family: "Manrope", sans-serif;
+                            text-align: start;
+
+                            background-color: white;
+                            padding: 10px 5px 10px 20px;
+                            width: 100%;
+                            cursor: pointer;
+
+
+                            &:hover{
+
+                                background-color: #FFD15B;
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        #p-number-recettes{
+            font-size: 21px;
+            font-weight: 400;
+            font-family: 'Anton', sans-serif;
+        }
+    }
+
+    #all-filter-selected{
+
+        margin-top: 20px;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        
+
+        .button-filter{
+
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-width: 80px;
+            gap: 20px;
+            padding: 15px;
+
+            font-family: "Manrope", sans-serif;
+            font-size: 14px;
+            border: none;
+
+            background-color: #FFD15B;
+            border-radius: 10px;
+
+        }
+
+    }
+}
+
+
+#section-gallery-elements{
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    background-color: #EDEDED;
+    padding: 0px 50px 50px 50px;
+
+
+    .one-element-gallery{
+
+        max-width: 380px;
+        max-height: 730px;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+
+        border-radius: 20px;
+        background-color: white;
+
+        margin-bottom: 50px;
+
+        .div-element-image{
+
+            position: relative;
+            width: 100%;
+            /*max-height: 34%;*/
+            height: 250px;
+            /*overflow: hidden;*/
+
+            .img-element{
+
+                width:100%;
+                height:100%;
+                object-fit: cover;
+
+            }
+
+            .p-time{
+                position: absolute;
+                top: 0px;
+                right: 20px;
+                background-color: #FFD15B;
+                padding: 3px 15px 3px 15px;
+                border-radius: 20px;
+                /*box-shadow: 0px 0px 1px black;*/
+            }
+
+        }
+
+        .div-element-information{
+
+            height: 80%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+
+            .title-cards{
+
+                font-family: 'Anton', sans-serif;
+                font-size: 18px;
+
+            }
+
+            .div-recette{
+
+                .p-title-recette{
+
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    color: gray;
+                    letter-spacing: 2px;
+                    font-size: 14px;
+
+                }
+
+                .p-description-recette{
+                    font-size: 14px;
+                    max-height: 80px;
+                    overflow-y: scroll;
+                }
+
+            }
+
+            .div-ingredients{
+
+
+
+                .p-title-ingredients{
+
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    color: gray;
+                    letter-spacing: 2px;
+                    font-size: 14px;
+
+
+                }
+
+                .div-all-ingredients{
+
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+
+
+                    .div-one-ingredient{
+
+                        display: flex;
+                        flex-direction: column;
+                        width: 50%;
+                        box-sizing: border-box;
+                        margin-bottom: 20px;
+
+                        .p-name-ingredient{
+
+                            font-size: 14px;
+                            margin: 0;
+
+
+                        }
+
+                        .p-number-ingredient{
+
+                            font-size: 14px;
+                            margin: 0;
+                            color: grey;
+
+
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+
+        }
+
+    }
+
+
+}
