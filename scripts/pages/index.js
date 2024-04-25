@@ -199,41 +199,28 @@ function filterSelect(button_select, array_recipes) {
 
 function filterSearch(all_recipes) {
 
+    console.time("filterSearch")
     const object_elements_dom = getElementsDom();
 
     if (object_elements_dom.input_search_main.value.length < 3) {
         return all_recipes
     } else {
-
         const text_to_search = object_elements_dom.input_search_main.value.toUpperCase();
-
         const array_to_show =[]
-
         all_recipes.forEach(recipe => {
-    
-            console.log(recipe)
-
             if (recipe.name.toUpperCase().indexOf(text_to_search) > -1) {
                 array_to_show.push(recipe);
-
-            }else if (recipe.appliance.toUpperCase().indexOf(text_to_search) > -1) {
-
+            }else if (recipe.description.toUpperCase().indexOf(text_to_search) > -1) {
                 array_to_show.push(recipe);
-
-            } else if (recipe.description.toUpperCase().indexOf(text_to_search) > -1) {
-
-                array_to_show.push(recipe);
-
             } else {
-
                 recipe.ingredients.forEach(ingredient => {
-
                     if (ingredient.ingredient.toUpperCase().indexOf(text_to_search) > -1) {
                         array_to_show.push(recipe);
                     }
                 })
             }
         });
+        console.timeEnd("filterSearch")
         return array_to_show
     }
 }
@@ -307,6 +294,8 @@ function getElementsDom() {
 
 function createArrayToShow(arrayToShow) {
 
+    console.time("create-array-test")
+
     deleteGallery()
 
     const object_elements_dom = getElementsDom();
@@ -319,6 +308,7 @@ function createArrayToShow(arrayToShow) {
         message_no_recette.textContent = `Aucune recette ne contient '${object_elements_dom.input_search_main.value}' vous pouvez chercher «
         tarte aux pommes », « poisson », etc.`
         object_elements_dom.div_gallery_elements.appendChild(message_no_recette);
+        object_elements_dom.p_number_recettes.textContent = "0 recette";
 
     } else {
 
@@ -358,10 +348,14 @@ function createArrayToShow(arrayToShow) {
         renderSelect(all_ingredients, object_elements_dom.dropdown_ingredient_element_no_select, "ingredient", arrayToShow);
         renderSelect(all_ustensiles, object_elements_dom.dropdown_ustensiles_element_no_select , "ustensiles", arrayToShow);
         renderSelect(all_appareils, object_elements_dom.dropdown_appareils_element_no_select, "appareils", arrayToShow);
-    
-
-        object_elements_dom.p_number_recettes.textContent = arrayToShow.length + " recettes";
+        if (arrayToShow.length > 1) {
+            object_elements_dom.p_number_recettes.textContent = arrayToShow.length + " recettes";
+        } else {
+            object_elements_dom.p_number_recettes.textContent = arrayToShow.length + " recette";
+        }
     }
+
+    console.timeEnd("create-array-test")
 }
 
 function renderSelect(items, dropdown_element_no_select, type_element, array_to_show) {
