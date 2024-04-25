@@ -149,27 +149,28 @@ async function filterFunction() {
     const object_elements_dom = getElementsDom();
     
     if (object_elements_dom.all_button_filter_selected.length !== 0) {
-        for (let button_filter of object_elements_dom.all_button_filter_selected) {
+        for (let button_filter of Array.from(object_elements_dom.all_button_filter_selected)) {
             const array_one_selected = filterSelect(button_filter, all_recipes);
-            for (let element of array_all_selected) {
+            console.log(array_one_selected, array_all_selected)
+            for (let i = 0; i < array_all_selected.length; i++) {
+                const element = array_all_selected[i];
                 let existingElement = false;
-                for (let one_element_one_selected of array_one_selected) {
-                    if (one_element_one_selected === existingElement) {
-                        existingElement = true
-                        break
+            
+                for (const one_element_one_selected of array_one_selected) {
+                    if (one_element_one_selected === element) {
+                        existingElement = true;
+                        break; // Stoppe la recherche, car on a trouvé l'élément
                     }
                 }
+            
                 if (!existingElement) {
-                    const index_element = array_all_selected.indexOf(element);
-                    array_all_selected.splice(index_element, 1);
+                    array_all_selected.splice(i, 1); // Supprime l'élément
+                    i--; // Ajuste l'index pour tenir compte de la suppression
+                    console.log('bonjour ' + element);
                 }
-                /*if (!array_one_selected.includes(element)) {
-                    const index_element = array_all_selected.indexOf(element);
-                    array_all_selected.splice(index_element, 1);
-                }*/
             }
         }
-
+        console.log(array_all_selected)
         if (object_elements_dom.input_search_main.value.length >= 3) {
             const array_search = filterSearch(all_recipes);
             for (let element of array_search) {
@@ -207,6 +208,7 @@ async function filterFunction() {
 function filterSelect(button_select, array_recipes) {
     const type_button = button_select.getAttribute('data-type-element');
     const text_button = button_select.textContent.toUpperCase();
+    const text_regex = new RegExp(text_button);
     console.log(button_select, type_button, text_button);
 
     const array_selected = []
@@ -216,7 +218,8 @@ function filterSelect(button_select, array_recipes) {
         
         for (let recipe of array_recipes) {
             for (let ingredient of recipe.ingredients) {
-                if (ingredient.ingredient.toUpperCase().indexOf(text_button) > -1) {
+                if (text_regex.test(ingredient.ingredient.toUpperCase()))
+                {
                     array_selected.push(recipe);
                 }
             }
@@ -231,7 +234,7 @@ function filterSelect(button_select, array_recipes) {
         return array_selected
     } else if (type_button === "appareils") {
         for (let recipe of array_recipes) {
-            if (recipe.appliance.toUpperCase().indexOf(text_button) > -1) {
+            if (text_regex.test(recipe.appliance.toUpperCase())) {
                 array_selected.push(recipe);
             }
         }
@@ -240,12 +243,13 @@ function filterSelect(button_select, array_recipes) {
                 array_selected.push(recipe);
             }
         })*/
+        console.log(array_selected)
         return array_selected
     } else {
         for (let recipe of array_recipes) {
             
             for (let ustensil of recipe.ustensils) {
-                if (ustensil.toUpperCase().indexOf(text_button) > -1) {
+                if (text_regex.test(ustensil.toUpperCase())) {
                     array_selected.push(recipe);
                 }
             }
@@ -263,66 +267,55 @@ function filterSelect(button_select, array_recipes) {
 
 function filterSearch(all_recipes) {
 
+    console.time("filterSearch-forof")
+
     const object_elements_dom = getElementsDom()
 
     if (object_elements_dom.input_search_main.value.length < 3) {
         return all_recipes
     } else {
         const text_to_search = object_elements_dom.input_search_main.value.toUpperCase();
+        const text_regex = new RegExp(text_to_search)
         const array_to_show =[]
-        for(let recipe of all_recipes){
-            if (recipe.name.toUpperCase().indexOf(text_to_search) > -1) {
+        for (let recipe of all_recipes) {
+            //if (recipe.name.toUpperCase().indexOf(text_to_search) > -1)
+            //if (recipe.description.toUpperCase().indexOf(text_to_search) > -1)
+            //(ingredient.ingredient.toUpperCase().indexOf(text_to_search) > -1)
+            if (text_regex.test(recipe.name.toUpperCase())) {
                 array_to_show.push(recipe);
-            }else if (recipe.description.toUpperCase().indexOf(text_to_search) > -1) {
+            }else if (text_regex.test(recipe.description.toUpperCase())) {
                 array_to_show.push(recipe);
             } else {
                 for(let ingredient of recipe.ingredients){
-                    if (ingredient.ingredient.toUpperCase().indexOf(text_to_search) > -1) {
+                    if (text_regex.test(ingredient.ingredient.toUpperCase())) {
                         array_to_show.push(recipe);
                     }
                 }
             }
         };
+        console.timeEnd("filterSearch-forof")
         return array_to_show
     }
+
 };
 
 function deleteGallery() {
-
     const object_elements_dom = getElementsDom();
-
-
-
     if (object_elements_dom.div_gallery_elements.hasChildNodes()) {
         for (let element_gallery of Array.from(object_elements_dom.div_gallery_elements.children)) {
             element_gallery.remove()
         }
-        
-        
-        /*Array.from(div_gallery_elements.children).forEach(child => {
-            child.remove()
-        });*/
     }
-
-
     if (object_elements_dom.dropdown_ustensiles_element_no_select.hasChildNodes()) {
         for (let element_ustensil of Array.from(object_elements_dom.dropdown_ustensiles_element_no_select.children)) {
             element_ustensil.remove()
         }
-        /*Array.from(dropdown_ustensiles_element_no_select.children).forEach(child => {
-            child.remove()
-        });*/
     }
-
     if (object_elements_dom.dropdown_appareils_element_no_select.hasChildNodes()) {
         
         for (let element_appareil of Array.from(object_elements_dom.dropdown_appareils_element_no_select.children)) {
             element_appareil.remove()
         }
-        
-        /*Array.from(dropdown_appareils_element_no_select.children).forEach(child => {
-            child.remove()
-        });*/
     }
 
     if (object_elements_dom.dropdown_ingredient_element_no_select.hasChildNodes()) {
@@ -330,14 +323,7 @@ function deleteGallery() {
         for (let element_ingredient of Array.from(object_elements_dom.dropdown_ingredient_element_no_select.children)) {
             element_ingredient.remove()
         }
-        /*Array.from(dropdown_ingredient_element_no_select.children).forEach(child => {
-            child.remove()
-        });*/
     }
-
-
-
-
 }
 
 function getElementsDom() {
@@ -384,7 +370,7 @@ function getElementsDom() {
 
 
 function createArrayToShow(arrayToShow) {
-
+    console.time("create-array-test-forof")
     const object_elements_dom = getElementsDom();
 
     deleteGallery()
@@ -394,6 +380,7 @@ function createArrayToShow(arrayToShow) {
         message_no_recette.textContent = `Aucune recette ne contient '${object_elements_dom.input_search_main.value}' vous pouvez chercher «
         tarte aux pommes », « poisson », etc.`
         object_elements_dom.div_gallery_elements.appendChild(message_no_recette);
+        object_elements_dom.p_number_recettes.textContent = "0 recette";
     } else {
         let all_ingredients = [];
         let all_ustensiles = [];
@@ -410,18 +397,13 @@ function createArrayToShow(arrayToShow) {
                 if (!isIngredientExisting) {
                     all_ingredients.push(ingredient.ingredient);
                 }
-                /*if (!all_ingredients.some(existingIngredient => existingIngredient.toUpperCase() === ingredient.ingredient.toUpperCase())) {
-                    all_ingredients.push(ingredient.ingredient);
-                }*/
             };
             for (let button_selected of Array.from(object_elements_dom.elements_ingredients_selected.children)){
-                for (let element of all_ingredients) {
-                    if (element.toUpperCase() == button_selected.textContent.toUpperCase()) {
-                        const index_element = all_ingredients.indexOf(element);
-                        all_ingredients.splice(index_element, 1);
+                for (let i = all_ingredients.length - 1; i >= 0; i--) {
+                    if (all_ingredients[i].toUpperCase() === button_selected.textContent.toUpperCase()) {
+                        all_ingredients.splice(i, 1);
                     }
                 }
-                //all_ingredients = all_ingredients.filter(element => element.toUpperCase() !== button_selected.textContent.toUpperCase())
             }
             for(let ustensil of element.ustensils){
                 let isUstensilExisting = false
@@ -434,18 +416,13 @@ function createArrayToShow(arrayToShow) {
                 if (!isUstensilExisting) {
                     all_ustensiles.push(ustensil);
                 }
-                /*if (!all_ustensiles.some(existingUstensil => existingUstensil.toUpperCase() === ustensil.toUpperCase())) {
-                    all_ustensiles.push(ustensil);
-                }*/
             };
             for (let button_selected of Array.from(object_elements_dom.elements_ustensils_selected.children)) {
-                for (let element of all_ustensiles) {
-                    if (element.toUpperCase() !== button_selected.textContent.toUpperCase()) {
-                        const index_element = all_ustensiles.indexOf(element);
-                        all_ustensiles.splice(index_element, 1);
+                for (let i = all_ustensiles.length - 1; i >= 0; i--) {
+                    if (all_ustensiles[i].toUpperCase() === button_selected.textContent.toUpperCase()) {
+                        all_ustensiles.splice(i, 1);
                     }
                 }
-                //all_ustensiles = all_ustensiles.filter(element => element.toUpperCase() !== button_selected.textContent.toUpperCase())
             };
             
 
@@ -459,20 +436,12 @@ function createArrayToShow(arrayToShow) {
                 if (!isAppareilExisting) {
                     all_appareils.push(element.appliance);
                 }
-
-
-
-            /*if (!all_appareils.some(existingAppareil => existingAppareil.toUpperCase() === element.appliance.toUpperCase())) {
-                    all_appareils.push(element.appliance);
-            }*/
             for (let button_selected of Array.from(object_elements_dom.elements_appareils_selected.children)) {
-                for (let element of all_appareils) {
-                    if (element.toUpperCase() !== button_selected.textContent.toUpperCase()) {
-                        const index_element = all_appareils.indexOf(element);
-                        all_appareils.splice(index_element, 1);
+                for (let i = all_appareils.length - 1; i >= 0; i--) {
+                    if (all_appareils[i].toUpperCase() === button_selected.textContent.toUpperCase()) {
+                        all_appareils.splice(i, 1);
                     }
                 }
-                //all_appareils = all_appareils.filter(element => element.toUpperCase() !== button_selected.textContent.toUpperCase())
             }
             renderCard(element , object_elements_dom.div_gallery_elements);
         };
@@ -480,8 +449,13 @@ function createArrayToShow(arrayToShow) {
         renderSelect(all_ingredients, object_elements_dom.dropdown_ingredient_element_no_select, "ingredient");
         renderSelect(all_ustensiles, object_elements_dom.dropdown_ustensiles_element_no_select , "ustensiles");
         renderSelect(all_appareils, object_elements_dom.dropdown_appareils_element_no_select, "appareils");
-        object_elements_dom.p_number_recettes.textContent = arrayToShow.length + " recettes";
+        if (arrayToShow.length > 1) {
+            object_elements_dom.p_number_recettes.textContent = arrayToShow.length + " recettes";
+        } else {
+            object_elements_dom.p_number_recettes.textContent = arrayToShow.length + " recette";
+        }
     }
+    console.timeEnd("create-array-test-forof")
 }
 
 function renderSelect(items, dropdown_element_no_select, type_element) {
