@@ -1,11 +1,7 @@
 function buttonDropdown(event) {
-
     const dropdown_first_part = event.currentTarget;
     const dropdown = dropdown_first_part.parentElement;
-    const dropdown_second_part = dropdown.querySelector('.dropdown-second-part');
-    const hauteur_dropdown_seconde_part = dropdown_second_part.offsetHeight;
     const arrow_path = dropdown_first_part.querySelector('path');
-
     if (dropdown.classList.contains('active')) {
         dropdown.classList.remove('active');
         arrow_path.setAttribute('d', "M1 1L7.5 7L14 1");
@@ -13,21 +9,16 @@ function buttonDropdown(event) {
         dropdown.classList.add('active');
         arrow_path.setAttribute('d', "M1 7L7.5 1L14 7");
     }
-
-    console.log('bonjour', dropdown_first_part, dropdown, arrow_path)
 }
 
 function filterDropdown(event) {
-
     const input_search = event.currentTarget;
     const filter = input_search.value.toUpperCase();
     const dropdown = input_search.closest('.dropdown');
     const div_element_no_select = dropdown.querySelector('.elements-no-select');
     const all_button_dropdown = div_element_no_select.querySelectorAll('.one-element-dropdown');
-
-
     for (let element of all_button_dropdown) {
-        const text_value = element.textContent
+        const text_value = element.textContent;
         if (text_value.toUpperCase().indexOf(filter) > -1) {
             element.style.display = "block";
         } else {
@@ -36,78 +27,60 @@ function filterDropdown(event) {
     }
 };
 
-
-
 async function getRecipes() {
     try {
-        const response = await fetch("../../data/recipes.json")
+        const response = await fetch("../../data/recipes.json");
         const all_recipes = await response.json();
         return all_recipes
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 }
 
-
 async function init() {
     const all_recipes = await getRecipes();
-    createArrayToShow(all_recipes)
+    createArrayToShow(all_recipes);
 }
 
-
-
-
 function addButtonSelect(event) {
-
     const object_elements_dom = getElementsDom();
-
     const button_event = event.currentTarget;
     const type_button = button_event.getAttribute('data-type-element');
     const div_dropdown_second_part = button_event.closest('.dropdown-second-part');
-    const div_elements_select = div_dropdown_second_part.querySelector('.elements-select')
-
-    console.log('bonjour tu coco', button_event.textContent, div_elements_select);
-
+    const div_elements_select = div_dropdown_second_part.querySelector('.elements-select');
     const button_element_dropdown_selected = document.createElement('button');
     button_element_dropdown_selected.classList.add('one-element-dropdown-selected');
     button_element_dropdown_selected.addEventListener('click', (event) => {
-        removeSelectElement(event)
+        removeSelectElement(event);
     });
     button_element_dropdown_selected.textContent = button_event.textContent;
     const img_removeButtonDropdown = document.createElement('img');
     img_removeButtonDropdown.setAttribute('src', './assets/icones/closeButtonDropdown.svg');
-
-    button_element_dropdown_selected.appendChild(img_removeButtonDropdown)
+    button_element_dropdown_selected.appendChild(img_removeButtonDropdown);
     div_elements_select.appendChild(button_element_dropdown_selected);
-
-
     const button_filter = document.createElement('button');
-
     button_filter.textContent = button_event.textContent;
     button_filter.classList.add('button-filter');
     button_filter.setAttribute('data-type-element', type_button);
     button_filter.addEventListener('click', (event) => {
-        removeFilterSelect(event)
+        removeFilterSelect(event);
     })
     const icone_close = document.createElement('img');
     icone_close.setAttribute('src', './assets/icones/closeButton.svg');
     button_filter.appendChild(icone_close);
     object_elements_dom.all_filter_selected.appendChild(button_filter);
-
     button_event.remove();
-    filterFunction()
+    filterFunction();
 }
 
 function removeFilterSelect(event) {
-
     const object_elements_dom = getElementsDom();
-
     const event_button = event.currentTarget;
     const text_button = event_button.textContent;
     for (let one_div_element of object_elements_dom.all_dropdown_elements_select) {
         for (let element of Array.from(one_div_element.children)) {
             if (text_button.toUpperCase() === element.textContent.toUpperCase()) {
-                element.remove()
+                element.remove();
             }
         }
     }
@@ -116,61 +89,41 @@ function removeFilterSelect(event) {
 }
 
 function removeSelectElement(event) {
-
     const object_elements_dom = getElementsDom();
-
     const event_button = event.currentTarget;
     const text_button = event_button.textContent;
-
-
     for (let filter_selected of Array.from(object_elements_dom.all_filter_selected.children)) {
-
         if (text_button.toUpperCase() === filter_selected.textContent.toUpperCase()) {
             filter_selected.remove()
         }
-
     }
-
-    /* Array.from(all_filter_selected.children).forEach(element => {
-        if (text_button.toUpperCase() === element.textContent.toUpperCase()) {
-            element.remove()
-        }
-    })*/
     event_button.remove();
     filterFunction()
 }
 
 async function filterFunction() {
-
     const all_recipes = await getRecipes();
     let array_all_selected = all_recipes;
     const array_to_show = [];
-
     const object_elements_dom = getElementsDom();
-    
     if (object_elements_dom.all_button_filter_selected.length !== 0) {
         for (let button_filter of Array.from(object_elements_dom.all_button_filter_selected)) {
             const array_one_selected = filterSelect(button_filter, all_recipes);
-            console.log(array_one_selected, array_all_selected)
             for (let i = 0; i < array_all_selected.length; i++) {
                 const element = array_all_selected[i];
                 let existingElement = false;
-            
                 for (const one_element_one_selected of array_one_selected) {
                     if (one_element_one_selected === element) {
                         existingElement = true;
-                        break; // Stoppe la recherche, car on a trouvé l'élément
+                        break;
                     }
                 }
-            
                 if (!existingElement) {
-                    array_all_selected.splice(i, 1); // Supprime l'élément
-                    i--; // Ajuste l'index pour tenir compte de la suppression
-                    console.log('bonjour ' + element);
+                    array_all_selected.splice(i, 1);
+                    i--;
                 }
             }
         }
-        console.log(array_all_selected)
         if (object_elements_dom.input_search_main.value.length >= 3) {
             const array_search = filterSearch(all_recipes);
             for (let element of array_search) {
@@ -184,13 +137,9 @@ async function filterFunction() {
                 if (elementExisting) {
                     array_to_show.push(element);
                 }
-                /*if (array_all_selected.includes(element)) {
-                    array_to_show.push(element);
-                }*/
             }
             createArrayToShow(array_to_show);
         } else {
-            console.log(array_all_selected)
             createArrayToShow(array_all_selected)
         }
     } else if (object_elements_dom.input_search_main.value.length >= 3) { 
@@ -199,23 +148,14 @@ async function filterFunction() {
     } else {
         createArrayToShow(all_recipes);
     }
-
-
-
 }
-
 
 function filterSelect(button_select, array_recipes) {
     const type_button = button_select.getAttribute('data-type-element');
     const text_button = button_select.textContent.toUpperCase();
     const text_regex = new RegExp(text_button);
-    console.log(button_select, type_button, text_button);
-
-    const array_selected = []
-
-
+    const array_selected = [];
     if (type_button === "ingredient") { 
-        
         for (let recipe of array_recipes) {
             for (let ingredient of recipe.ingredients) {
                 if (text_regex.test(ingredient.ingredient.toUpperCase()))
@@ -224,13 +164,6 @@ function filterSelect(button_select, array_recipes) {
                 }
             }
         }
-        /*array_recipes.forEach(recipe => { 
-            recipe.ingredients.forEach(ingredient => {
-                if (ingredient.ingredient.toUpperCase().indexOf(text_button) > -1) {
-                    array_selected.push(recipe);
-                }
-            })
-        })*/
         return array_selected
     } else if (type_button === "appareils") {
         for (let recipe of array_recipes) {
@@ -238,12 +171,6 @@ function filterSelect(button_select, array_recipes) {
                 array_selected.push(recipe);
             }
         }
-        /*array_recipes.forEach(recipe => { 
-            if (recipe.appliance.toUpperCase().indexOf(text_button) > -1) {
-                array_selected.push(recipe);
-            }
-        })*/
-        console.log(array_selected)
         return array_selected
     } else {
         for (let recipe of array_recipes) {
@@ -254,33 +181,20 @@ function filterSelect(button_select, array_recipes) {
                 }
             }
         }
-        /*array_recipes.forEach(recipe => { 
-            recipe.ustensils.forEach(ustensil => {
-                if (ustensil.toUpperCase().indexOf(text_button) > -1) {
-                    array_selected.push(recipe);
-                }
-            })
-        })*/
         return array_selected
     }
 }
 
 function filterSearch(all_recipes) {
-
-    console.time("filterSearch-forof")
-
-    const object_elements_dom = getElementsDom()
-
+    console.time("filterSearch-forof");
+    const object_elements_dom = getElementsDom();
     if (object_elements_dom.input_search_main.value.length < 3) {
         return all_recipes
     } else {
         const text_to_search = object_elements_dom.input_search_main.value.toUpperCase();
-        const text_regex = new RegExp(text_to_search)
-        const array_to_show =[]
+        const text_regex = new RegExp(text_to_search);
+        const array_to_show = [];
         for (let recipe of all_recipes) {
-            //if (recipe.name.toUpperCase().indexOf(text_to_search) > -1)
-            //if (recipe.description.toUpperCase().indexOf(text_to_search) > -1)
-            //(ingredient.ingredient.toUpperCase().indexOf(text_to_search) > -1)
             if (text_regex.test(recipe.name.toUpperCase())) {
                 array_to_show.push(recipe);
             }else if (text_regex.test(recipe.description.toUpperCase())) {
@@ -293,41 +207,37 @@ function filterSearch(all_recipes) {
                 }
             }
         };
-        console.timeEnd("filterSearch-forof")
+        console.timeEnd("filterSearch-forof");
         return array_to_show
     }
-
 };
 
 function deleteGallery() {
     const object_elements_dom = getElementsDom();
     if (object_elements_dom.div_gallery_elements.hasChildNodes()) {
         for (let element_gallery of Array.from(object_elements_dom.div_gallery_elements.children)) {
-            element_gallery.remove()
+            element_gallery.remove();
         }
     }
     if (object_elements_dom.dropdown_ustensiles_element_no_select.hasChildNodes()) {
         for (let element_ustensil of Array.from(object_elements_dom.dropdown_ustensiles_element_no_select.children)) {
-            element_ustensil.remove()
+            element_ustensil.remove();
         }
     }
     if (object_elements_dom.dropdown_appareils_element_no_select.hasChildNodes()) {
         
         for (let element_appareil of Array.from(object_elements_dom.dropdown_appareils_element_no_select.children)) {
-            element_appareil.remove()
+            element_appareil.remove();
         }
     }
-
     if (object_elements_dom.dropdown_ingredient_element_no_select.hasChildNodes()) {
-
         for (let element_ingredient of Array.from(object_elements_dom.dropdown_ingredient_element_no_select.children)) {
-            element_ingredient.remove()
+            element_ingredient.remove();
         }
     }
 }
 
 function getElementsDom() {
-
     const div_gallery_elements = document.getElementById('section-gallery-elements');
     const dropdown_ustensiles = document.getElementById('dropdown-ustensiles');
     const dropdown_ustensiles_element_no_select = dropdown_ustensiles.querySelector('.elements-no-select');
@@ -343,8 +253,6 @@ function getElementsDom() {
     const all_filter_selected = document.getElementById('all-filter-selected');
     const all_button_filter_selected = all_filter_selected.querySelectorAll('button');
     const all_dropdown_elements_select = document.querySelectorAll('.elements-select');
-
-
     object_element = {
         div_gallery_elements: div_gallery_elements,
         dropdown_ustensiles: dropdown_ustensiles,
@@ -362,23 +270,18 @@ function getElementsDom() {
         all_button_filter_selected: all_button_filter_selected,
         all_dropdown_elements_select: all_dropdown_elements_select,
     }
-
     return object_element
-
 }
 
-
-
 function createArrayToShow(arrayToShow) {
-    console.time("create-array-test-forof")
+    console.time("create-array-test-forof");
     const object_elements_dom = getElementsDom();
-
     deleteGallery()
     if (arrayToShow.length === 0) {
         const message_no_recette = document.createElement('p');
         message_no_recette.classList.add('message-no-recette');
         message_no_recette.textContent = `Aucune recette ne contient '${object_elements_dom.input_search_main.value}' vous pouvez chercher «
-        tarte aux pommes », « poisson », etc.`
+        tarte aux pommes », « poisson », etc.`;
         object_elements_dom.div_gallery_elements.appendChild(message_no_recette);
         object_elements_dom.p_number_recettes.textContent = "0 recette";
     } else {
@@ -424,8 +327,6 @@ function createArrayToShow(arrayToShow) {
                     }
                 }
             };
-            
-
                 let isAppareilExisting = false
                 for (let existingAppareil of all_appareils) {
                     if (existingAppareil.toUpperCase() === element.appliance.toUpperCase()) {
@@ -445,7 +346,6 @@ function createArrayToShow(arrayToShow) {
             }
             renderCard(element , object_elements_dom.div_gallery_elements);
         };
-        console.log(all_appareils, all_ustensiles, all_ingredients)
         renderSelect(all_ingredients, object_elements_dom.dropdown_ingredient_element_no_select, "ingredient");
         renderSelect(all_ustensiles, object_elements_dom.dropdown_ustensiles_element_no_select , "ustensiles");
         renderSelect(all_appareils, object_elements_dom.dropdown_appareils_element_no_select, "appareils");
@@ -469,16 +369,10 @@ function renderSelect(items, dropdown_element_no_select, type_element) {
     };
 }
 
-
-
 function renderCard(element, div_gallery_elements) {
-
-
     const div_one_element = document.createElement('div');
     div_one_element.classList.add('one-element-gallery');
-    div_gallery_elements.appendChild(div_one_element)
-
-    /*Création dynamique de la div-element-image*/
+    div_gallery_elements.appendChild(div_one_element);
     const div_element_image = document.createElement('div');
     div_element_image.classList.add('div-element-image');
     const image_element = document.createElement('img');
@@ -489,18 +383,14 @@ function renderCard(element, div_gallery_elements) {
     p_time_element.textContent = element.time + "min";
     div_element_image.appendChild(image_element);
     div_element_image.appendChild(p_time_element);
-    div_one_element.appendChild(div_element_image)
-
-    /*Création dynamique de la div-element-information*/
+    div_one_element.appendChild(div_element_image);
     const div_element_information = document.createElement('div');
-    div_element_information.classList.add("div-element-information")
-    div_one_element.appendChild(div_element_information)
-
+    div_element_information.classList.add("div-element-information");
+    div_one_element.appendChild(div_element_information);
     const title_card = document.createElement('h2');
     title_card.classList.add('title-cards');
     title_card.textContent = element.name;
     div_element_information.appendChild(title_card);
-
     const div_recette = document.createElement('div');
     div_recette.classList.add('div-recette');
     const p_title_recette = document.createElement('p');
@@ -512,32 +402,24 @@ function renderCard(element, div_gallery_elements) {
     div_recette.appendChild(p_title_recette);
     div_recette.appendChild(p_description_recette);
     div_element_information.appendChild(div_recette);
-
     const div_ingredients = document.createElement('div');
     div_ingredients.classList.add('div-ingredients');
-    div_element_information.appendChild(div_ingredients)
-
+    div_element_information.appendChild(div_ingredients);
     const p_title_ingredients = document.createElement('p');
     p_title_ingredients.classList.add('p-title-ingredient');
     p_title_ingredients.textContent = 'Ingrédients';
     div_ingredients.appendChild(p_title_ingredients);
-
     const div_all_ingredients = document.createElement('div');
     div_all_ingredients.classList.add('div-all-ingredients');
     div_ingredients.appendChild( div_all_ingredients);
-
     for (let ingredient of element.ingredients){
-
         const div_one_ingredient = document.createElement('div');
         div_one_ingredient.classList.add('div-one-ingredient');
-
         const p_name_ingredient = document.createElement('p');
         p_name_ingredient.classList.add('p-name-ingredient');
         p_name_ingredient.textContent = ingredient.ingredient;
-
         const p_number_ingredient = document.createElement('p');
         p_number_ingredient.classList.add('p-number-ingredient')
-
         if (ingredient.unit) {
             p_number_ingredient.textContent = ingredient.quantity + " "+ingredient.unit;
         } else {
@@ -548,8 +430,5 @@ function renderCard(element, div_gallery_elements) {
         div_all_ingredients.appendChild(div_one_ingredient)
     }
 }
-
-
-
 
 init()
