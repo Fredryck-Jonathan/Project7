@@ -139,6 +139,7 @@ async function filterFunction() {
             const array_one_selected = filterSelect(element, all_recipes);
             array_all_selected = array_all_selected.filter(element => array_one_selected.includes(element));
         })
+
         if (object_elements_dom.input_search_main.value.length >= 3) {
             const array_search = filterSearch(all_recipes);
             array_search.forEach(element => {
