@@ -10,14 +10,14 @@
         <script src="./scripts/index.js"></script>
     </head>
     <body>
-        <section id="section-search">
+        <div id="section-search">
             <div>
-                <img id="logo-icone" src="./assets/icones/logo.svg"/>
+                <img id="logo-icone" alt="logo les Petits Plats" src="./assets/icones/logo.svg">
             </div>
             <div id="zone-search">
                 <p>Cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses</p>
                 <div id="input-zone-search">
-                    <input id="input-search-main" type="search" placeholder="Rechercher une recette, un ingrédient, ..." oninput="filterFunction(event)"/>
+                    <input id="input-search-main" type="search" placeholder="Rechercher une recette, un ingrédient, ..." oninput="filterFunction(event)">
                     <button onclick="addToFilter(event)">
                         <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="10" cy="10" r="9.5" stroke="white"/>
@@ -26,20 +26,20 @@
                     </button>
                 </div>
             </div>
-        </section>
-        <section id="section-dropdown-filter">
+        </div>
+        <div id="section-dropdown-filter">
             <div id="div-all-dropdown-number-recette">
                 <div id="div-all-dropdown">
                     <div id="dropdown-ingredients" class="dropdown">
                         <button onclick="buttonDropdown(event)" class="dropdown-first-part">
-                            <p>Ingrédients</p>
+                            Ingrédients
                             <svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round"/>
                             </svg>
                         </button>
                         <div class="dropdown-second-part">
                             <div class="dropdown-search-div">
-                                <input oninput="filterDropdown(event)" class="search-dropdown" type="search"/>
+                                <input oninput="filterDropdown(event)" class="search-dropdown" type="search">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.5"/>
                                     <line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.5"/>
@@ -51,14 +51,14 @@
                     </div>
                     <div id="dropdown-appareil" class="dropdown">
                         <button onclick="buttonDropdown(event)" class="dropdown-first-part">
-                            <p>Appareils</p>
+                            Appareils
                             <svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round"/>
                             </svg>
                         </button>
                         <div class="dropdown-second-part">
                             <div class="dropdown-search-div">
-                                <input oninput="filterDropdown()" class="search-dropdown" type="search"/>
+                                <input oninput="filterDropdown()" class="search-dropdown" type="search">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.5"/>
                                     <line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.5"/>
@@ -72,14 +72,14 @@
                     </div>
                     <div id="dropdown-ustensiles" class="dropdown">
                         <button onclick="buttonDropdown(event)" class="dropdown-first-part">
-                            <p>Ustensiles</p>
+                            Ustensiles
                             <svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round"/>
                             </svg>
                         </button>
                         <div class="dropdown-second-part">
                             <div class="dropdown-search-div">
-                                <input onkeyup="filterDropdown()" class="search-dropdown" type="search"/>
+                                <input onkeyup="filterDropdown()" class="search-dropdown" type="search">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.5"/>
                                     <line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.5"/>
@@ -93,7 +93,7 @@
                 <p id="p-number-recettes">recettes</p>
             </div>
             <div id="all-filter-selected"></div>
-        </section>
-        <section id="section-gallery-elements"></section>
+        </div>
+        <div id="section-gallery-elements"></div>
     </body>
 </html>
