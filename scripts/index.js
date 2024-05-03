@@ -13,14 +13,13 @@ function buttonDropdown(event) {
 
 function filterDropdown(event) {
     const input_search = event.currentTarget
-    const filter = input_search.value.toUpperCase();
+    const filter = strNoAccent(input_search.value.toUpperCase());
     const dropdown = input_search.closest('.dropdown');
     const div_element_no_select = dropdown.querySelector('.elements-no-select');
     const all_button_dropdown = div_element_no_select.querySelectorAll('.one-element-dropdown');
     all_button_dropdown.forEach(element => {
         text_value = element.textContent;
-        if (text_value.toUpperCase().indexOf(filter) > -1) {
-            
+        if (strNoAccent(text_value.toUpperCase()).indexOf(filter) > -1) {
             element.style.display = "block";
         } else {
             element.style.display = "none";
@@ -36,11 +35,6 @@ async function getRecipes() {
     } catch (error) {
         console.log(error)
     }
-}
-
-async function init() {
-    const all_recipes = await getRecipes();
-    createArrayToShow(all_recipes)
 }
 
 function addButtonSelect(event) {
@@ -80,7 +74,7 @@ function removeFilterSelect(event) {
     const text_button = event_button.textContent;
     object_elements_dom.all_dropdown_elements_select.forEach(one_div_elements => {
         Array.from(one_div_elements.children).forEach(element => {
-            if (text_button.toUpperCase() === element.textContent.toUpperCase()) {
+            if (strNoAccent(text_button.toUpperCase()) === strNoAccent(element.textContent.toUpperCase())) {
                 element.remove()
             }
         })
@@ -94,7 +88,7 @@ function removeSelectElement(event) {
     const event_button = event.currentTarget;
     const text_button = event_button.textContent;
     Array.from(object_elements_dom.all_filter_selected.children).forEach(element => {
-        if (text_button.toUpperCase() === element.textContent.toUpperCase()) {
+        if (strNoAccent(text_button.toUpperCase()) === strNoAccent(element.textContent.toUpperCase())) {
             element.remove()
         }
     })
@@ -133,12 +127,12 @@ async function filterFunction() {
 
 function filterSelect(button_select, array_recipes) {
     const type_button = button_select.getAttribute('data-type-element');
-    const text_button = button_select.textContent.toUpperCase();
+    const text_button = strNoAccent(button_select.textContent.toUpperCase());
     const array_selected = []
     if (type_button === "ingredient") { 
         array_recipes.forEach(recipe => { 
             recipe.ingredients.forEach(ingredient => {
-                if (ingredient.ingredient.toUpperCase().indexOf(text_button) > -1) {
+                if (strNoAccent(ingredient.ingredient.toUpperCase()).indexOf(text_button) > -1) {
                     array_selected.push(recipe);
                 }
             })
@@ -146,7 +140,7 @@ function filterSelect(button_select, array_recipes) {
         return array_selected
     } else if (type_button === "appareils") {
         array_recipes.forEach(recipe => { 
-            if (recipe.appliance.toUpperCase().indexOf(text_button) > -1) {
+            if (strNoAccent(recipe.appliance.toUpperCase()).indexOf(text_button) > -1) {
                 array_selected.push(recipe);
             }
         })
@@ -154,7 +148,7 @@ function filterSelect(button_select, array_recipes) {
     } else if (type_button === "ustensiles") {
         array_recipes.forEach(recipe => { 
             recipe.ustensils.forEach(ustensil => {
-                if (ustensil.toUpperCase().indexOf(text_button) > -1) {
+                if (strNoAccent(ustensil.toUpperCase()).indexOf(text_button) > -1) {
                     array_selected.push(recipe);
                 }
             })
@@ -169,16 +163,17 @@ function filterSearch(all_recipes) {
     if (object_elements_dom.input_search_main.value.length < 3) {
         return all_recipes
     } else {
-        const text_to_search = object_elements_dom.input_search_main.value.toUpperCase();
+        const text_to_search = strNoAccent(object_elements_dom.input_search_main.value.toUpperCase());
+        console.log(text_to_search, object_elements_dom.input_search_main.value)
         const array_to_show =[]
         all_recipes.forEach(recipe => {
-            if (recipe.name.toUpperCase().indexOf(text_to_search) > -1) {
+            if (strNoAccent(recipe.name.toUpperCase()).indexOf(text_to_search) > -1) {
                 array_to_show.push(recipe);
-            }else if (recipe.description.toUpperCase().indexOf(text_to_search) > -1) {
+            }else if (strNoAccent(recipe.description.toUpperCase()).indexOf(text_to_search) > -1) {
                 array_to_show.push(recipe);
             } else {
                 recipe.ingredients.forEach(ingredient => {
-                    if (ingredient.ingredient.toUpperCase().indexOf(text_to_search) > -1) {
+                    if (strNoAccent(ingredient.ingredient.toUpperCase()).indexOf(text_to_search) > -1) {
                         array_to_show.push(recipe);
                     }
                 })
@@ -266,27 +261,27 @@ function createArrayToShow(arrayToShow) {
         let all_appareils = [];
         arrayToShow.forEach(element => {
             element.ingredients.forEach(ingredient => {
-                if (!all_ingredients.some(existingIngredient => existingIngredient.toUpperCase() === ingredient.ingredient.toUpperCase())) {
+                if (!all_ingredients.some(existingIngredient => strNoAccent(existingIngredient.toUpperCase()) === strNoAccent(ingredient.ingredient.toUpperCase()))) {
                     all_ingredients.push(ingredient.ingredient);
                 }
             });
             Array.from(object_elements_dom.elements_ingredients_selected.children).forEach(button_selected => {
-                all_ingredients = all_ingredients.filter(element => element.toUpperCase() !== button_selected.textContent.toUpperCase())
+                all_ingredients = all_ingredients.filter(element => strNoAccent(element.toUpperCase()) !== strNoAccent(button_selected.textContent.toUpperCase()))
             })
             element.ustensils.forEach(ustensil => {
-                if (!all_ustensiles.some(existingUstensil => existingUstensil.toUpperCase() === ustensil.toUpperCase())) {
+                if (!all_ustensiles.some(existingUstensil => strNoAccent(existingUstensil.toUpperCase()) === strNoAccent(ustensil.toUpperCase()))) {
                     all_ustensiles.push(ustensil);
                 }
             });
             Array.from(object_elements_dom.elements_ustensils_selected.children).forEach(button_selected => {
-                all_ustensiles = all_ustensiles.filter(element => element.toUpperCase() !== button_selected.textContent.toUpperCase())
+                all_ustensiles = all_ustensiles.filter(element => strNoAccent(element.toUpperCase()) !== strNoAccent(button_selected.textContent.toUpperCase()))
             })
             
-            if (!all_appareils.some(existingAppareil => existingAppareil.toUpperCase() === element.appliance.toUpperCase())) {
+            if (!all_appareils.some(existingAppareil => strNoAccent(existingAppareil.toUpperCase()) === strNoAccent(element.appliance.toUpperCase()))) {
                     all_appareils.push(element.appliance);
             }
             Array.from(object_elements_dom.elements_appareils_selected.children).forEach(button_selected => {
-                all_appareils = all_appareils.filter(element => element.toUpperCase() !== button_selected.textContent.toUpperCase())
+                all_appareils = all_appareils.filter(element => strNoAccent(element.toUpperCase()) !== strNoAccent(button_selected.textContent.toUpperCase()))
             })
             renderCard(element , object_elements_dom.div_gallery_elements);
         });
@@ -365,7 +360,7 @@ function renderCard(element, div_gallery_elements) {
         const p_number_ingredient = document.createElement('p');
         p_number_ingredient.classList.add('p-number-ingredient')
         if (ingredient.unit) {
-            p_number_ingredient.textContent = ingredient.quantity + " "+ingredient.unit;
+            p_number_ingredient.textContent = ingredient.quantity + " " + ingredient.unit;
         } else {
             p_number_ingredient.textContent = ingredient.quantity;
         }
@@ -373,6 +368,16 @@ function renderCard(element, div_gallery_elements) {
         div_one_ingredient.appendChild(p_number_ingredient);
         div_all_ingredients.appendChild(div_one_ingredient)
     })
+}
+
+function strNoAccent(text) {
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+
+async function init() {
+    const all_recipes = await getRecipes();
+    createArrayToShow(all_recipes)
 }
 
 init()

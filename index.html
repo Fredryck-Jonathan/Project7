@@ -7,18 +7,17 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-        <script src="./scripts/pages/index.js"></script>
+        <script src="./scripts/index.js"></script>
     </head>
     <body>
-        <section id="section-search">
+        <div id="section-search">
             <div>
-                <img id="logo-icone" src="./assets/icones/logo.svg"/>
+                <img id="logo-icone" alt="Logo Les Petits Plats" src="./assets/icones/logo.svg">
             </div>
-
             <div id="zone-search">
                 <p>Cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses</p>
                 <div id="input-zone-search">
-                    <input id="input-search-main" type="search" placeholder="Rechercher une recette, un ingrédient, ..." onkeyup="filterFunction(event)"/>
+                    <input id="input-search-main" type="search" placeholder="Rechercher une recette, un ingrédient, ..." onkeyup="filterFunction(event)">
                     <button onclick="addToFilter(event)">
                         <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="10" cy="10" r="9.5" stroke="white"/>
@@ -27,162 +26,72 @@
                     </button>
                 </div>
             </div>
-        </section>
-        <section id="section-dropdown-filter">
+        </div>
+        <div id="section-dropdown-filter">
             <div id="div-all-dropdown-number-recette">
                 <div id="div-all-dropdown">
                     <div id="dropdown-ingredients" class="dropdown">
                         <button onclick="buttonDropdown(event)" class="dropdown-first-part">
-                            <p>Ingrédients</p>
+                            Ingrédients
                             <svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round"/>
                             </svg>
                         </button>
                         <div class="dropdown-second-part">
                             <div class="dropdown-search-div">
-                                <input onkeyup="filterDropdown(event)" class="search-dropdown" type="search"/>
+                                <input onkeyup="filterDropdown(event)" class="search-dropdown" type="search">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.5"/>
                                     <line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.5"/>
                                 </svg>
                             </div>
-
-                            <div class="elements-select">
-
-                            </div>
-
-                            <div class="elements-no-select">
-
-                            </div>
+                            <div class="elements-select"></div>
+                            <div class="elements-no-select"></div>
                         </div>
                     </div>
-
                     <div id="dropdown-appareil" class="dropdown">
                         <button onclick="buttonDropdown(event)" class="dropdown-first-part">
-                            <p>Appareils</p>
+                            Appareils
                             <svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round"/>
                             </svg>
                         </button>
                         <div class="dropdown-second-part">
                             <div class="dropdown-search-div">
-                                <input onkeyup="filterDropdown()" class="search-dropdown" type="search"/>
+                                <input onkeyup="filterDropdown()" class="search-dropdown" type="search">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.5"/>
                                     <line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.5"/>
                                 </svg>
                             </div>
-                            <div class="elements-select">
-                            </div>
-                            <div class="elements-no-select">
-                            </div>
+                            <div class="elements-select"></div>
+                            <div class="elements-no-select"></div>
                         </div>
                     </div>
                     <div id="dropdown-ustensiles" class="dropdown">
                         <button onclick="buttonDropdown(event)" class="dropdown-first-part">
-                            <p>Ustensiles</p>
+                            Ustensiles
                             <svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round"/>
                             </svg>
                         </button>
                         <div class="dropdown-second-part">
                             <div class="dropdown-search-div">
-                                <input onkeyup="filterDropdown()" class="search-dropdown" type="search"/>
+                                <input onkeyup="filterDropdown()" class="search-dropdown" type="search">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.5"/>
                                     <line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.5"/>
                                 </svg>
                             </div>
-
-                            <div class="elements-select">
-
-                            <!--
-                                <button onclick="removeButtonSelect(event)" class="one-element-dropdown-selected">
-                                    Crème de coco
-                                    <img src="./assets/icones/closeButtonDropdown.svg"/>
-                                </button>
-                            -->
-
-                            </div>
-
-                            <div class="elements-no-select">
-                                
-                            </div>
-
+                            <div class="elements-select"></div>
+                            <div class="elements-no-select"></div>
                         </div>
                     </div>
                 </div>
-
                 <p id="p-number-recettes">recettes</p>
             </div>
-            <div id="all-filter-selected">
-
-                <!--
-                <button onclick="removeElementFilter(event)" class="button-filter">
-                    Coco
-                    <img src="./assets/icones/closeButton.svg"/>
-                </button>
-                -->
-
-            </div>
-        </section>
-        <section id="section-gallery-elements">
-
-        <!--
-            <div class="one-element-gallery">
-
-                <div class="div-element-image">
-                    <img src="./assets/images/recettes/Recette01.jpg" class="img-element"/>
-                    <p class="p-time">10min</p>
-                </div>
-
-
-                <div class="div-element-information">
-
-                    <h2 class="title-cards">Limonade de Coco</h2>
-
-                    <div class="div-recette">
-                        <p class="p-title-recette">Recette</p>
-                        <p class="p-description-recette">Mettre les glaçons à votre goût dans le blender, Ajouter le lait  la crème de coco, le jus de 2 citrons et le sucre ensemble. Mixer jusqu'à obtenir la consistance désirée.</p>
-                    </div>
-
-                    <div class="div-ingredients">
-                        <p class="p-title-ingredients">Ingrédients</p>
-                        <div class="div-all-ingredients">
-
-                            <div class="div-one-ingredient">
-                                <p class="p-name-ingredient">Lait de coco</p>
-                                <p class="p-number-ingredient">400ml</p>
-                            </div>
-
-                            <div class="div-one-ingredient">
-                                <p class="p-name-ingredient">Jus de citron</p>
-                                <p class="p-number-ingredient">2</p>
-                            </div>
-
-                            <div class="div-one-ingredient">
-                                <p class="p-name-ingredient">Créme de coco</p>
-                                <p class="p-number-ingredient">4 cuillères</p>
-                            </div>
-
-                            <div class="div-one-ingredient">
-                                <p class="p-name-ingredient">Sucre</p>
-                                <p class="p-number-ingredient">20g</p>
-                            </div>
-
-                            <div class="div-one-ingredient">
-                                <p class="p-name-ingredient">Glaçons</p>
-                                <p class="p-number-ingredient">2</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </div>
-        -->
-
-        </section>
+            <div id="all-filter-selected"></div>
+        </div>
+        <div id="section-gallery-elements"></div>
     </body>
 </html>

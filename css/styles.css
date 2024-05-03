@@ -106,7 +106,7 @@ body {
   transition: all 0.3s ease;
 }
 #section-dropdown-filter #div-all-dropdown-number-recette #div-all-dropdown .dropdown.active .dropdown-second-part {
-  transform: scaleY(100%);
+  transform: scaleY(100);
   transition: all 0.3s ease 0.2s;
 }
 #section-dropdown-filter #div-all-dropdown-number-recette #div-all-dropdown .dropdown .dropdown-first-part {
@@ -120,13 +120,11 @@ body {
   cursor: pointer;
   transition: all 0.3s ease 0.2s;
   min-height: 50px;
+  font-family: "Manrope", sans-serif;
   z-index: 1;
 }
 #section-dropdown-filter #div-all-dropdown-number-recette #div-all-dropdown .dropdown .dropdown-first-part:hover {
   background-color: rgb(212, 212, 212);
-}
-#section-dropdown-filter #div-all-dropdown-number-recette #div-all-dropdown .dropdown .dropdown-first-part p {
-  font-family: "Manrope", sans-serif;
 }
 #section-dropdown-filter #div-all-dropdown-number-recette #div-all-dropdown .dropdown .dropdown-second-part {
   position: absolute;
@@ -137,7 +135,7 @@ body {
   background-color: white;
   padding: 10px 0px 10px 0px;
   border-radius: 0px 0px 11px 11px;
-  transform: scaleY(0%);
+  transform: scaleY(0);
   transform-origin: top;
   transition: all 0.3s ease;
 }
