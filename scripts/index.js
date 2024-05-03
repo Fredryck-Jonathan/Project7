@@ -101,28 +101,52 @@ async function filterFunction() {
     let array_all_selected = all_recipes;
     const array_to_show = [];
     const object_elements_dom = getElementsDom();
+    const regex = /^[\p{L}\s'\d%]*$/u;
     if (object_elements_dom.all_button_filter_selected.length !== 0) {
         object_elements_dom.all_button_filter_selected.forEach(element => {
             const array_one_selected = filterSelect(element, all_recipes);
             array_all_selected = array_all_selected.filter(element => array_one_selected.includes(element));
         })
-        if (object_elements_dom.input_search_main.value.length >= 3) {
-            const array_search = filterSearch(all_recipes);
-            array_search.forEach(element => {
-                if (array_all_selected.includes(element)) {
-                    array_to_show.push(element);
-                }
-            })
-            createArrayToShow(array_to_show);
+
+        if (!regex.test(object_elements_dom.input_search_main.value)) {
+            deleteGallery()
+            const message_no_recette = document.createElement('p');
+            message_no_recette.classList.add('message-no-recette');
+            message_no_recette.textContent = `Votre recherche contient des caractéres interdit.`;
+            object_elements_dom.div_gallery_elements.appendChild(message_no_recette);
+            object_elements_dom.p_number_recettes.textContent = "0 recette";
         } else {
-            createArrayToShow(array_all_selected)
+
+            if (object_elements_dom.input_search_main.value.length >= 3) {
+                const array_search = filterSearch(all_recipes);
+                array_search.forEach(element => {
+                    if (array_all_selected.includes(element)) {
+                        array_to_show.push(element);
+                    }
+                })
+                createArrayToShow(array_to_show);
+            } else {
+                createArrayToShow(array_all_selected)
+            }
         }
-    } else if (object_elements_dom.input_search_main.value.length >= 3) { 
-        let array_search = filterSearch(all_recipes);
-        createArrayToShow(array_search);
-    } else {
-        createArrayToShow(all_recipes);
-    }
+    } else if (!regex.test(object_elements_dom.input_search_main.value)) {
+            deleteGallery()
+            const message_no_recette = document.createElement('p');
+            message_no_recette.classList.add('message-no-recette');
+            message_no_recette.textContent = `Votre recherche contient des caractéres interdit.`;
+            object_elements_dom.div_gallery_elements.appendChild(message_no_recette);
+            object_elements_dom.p_number_recettes.textContent = "0 recette";
+        } else {
+        
+            if (object_elements_dom.input_search_main.value.length >= 3) {
+                let array_search = filterSearch(all_recipes);
+                createArrayToShow(array_search);
+            } else {
+                createArrayToShow(all_recipes);
+            }
+    
+        }
+    
 }
 
 function filterSelect(button_select, array_recipes) {
